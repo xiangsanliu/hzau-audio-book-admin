@@ -5,7 +5,7 @@
             <el-menu-item @click="router.replace('/bookManage')" index="1">
                 有声书管理
             </el-menu-item>
-            <el-menu-item @click="router.replace('/land')" index="2">
+            <el-menu-item @click="router.replace('/bookListManage')" index="2">
                 书单管理
             </el-menu-item>
             <el-menu-item index="3">

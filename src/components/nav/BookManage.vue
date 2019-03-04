@@ -44,7 +44,8 @@
                                :action="uploadAction"
                                :file-list="fileList"
                                :on-change="uploadChange"
-                               :on-success="uploadSuccess">
+                               :on-success="uploadSuccess"
+                               :before-upload="uploadBefore">
                         <el-button size="small" type="primary">点击上传</el-button>
                         <div slot="tip" class="el-upload__tip">上传文件不能超过30MB</div>
                     </el-upload>
@@ -127,8 +128,6 @@
                 _this.currentBookId = row.id;
                 _this.uploadAction = '/api/file/upload/bookAudio/' + row.id + '/' + row.name;
                 _this.reloadBookAudio(row.id);
-                /*eslint no-console: ["error", { allow: ["warn", "error", "log"] }] */
-                console.log(_this.uploadAction);
             },
             removeBook: function (row) {
                 let _this = this;
@@ -158,6 +157,20 @@
             },
             uploadSuccess: function () {
                 this.reloadBookAudio(this.currentBookId)
+            },
+            uploadBefore: function (file) {
+                if (file.size > 31457280) {
+                    this.$message.error("文件大于30MB!");
+                    return false;
+                }
+                let fileSuffix = file.name.substring(file.name.lastIndexOf('.') + 1);
+                /*eslint no-console: ["error", { allow: ["warn", "error"] }] */
+                console.warn(fileSuffix);
+                if (fileSuffix.toLowerCase() !== 'mp3') {
+                    this.$message.error("所选文件不是音频!");
+                    return false;
+                }
+                return true;
             },
             downloadAudio: function (row) {
                 window.location.href = '/api/file/download/bookAudio/' + row.id;

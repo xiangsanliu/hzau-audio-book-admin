@@ -7,7 +7,7 @@ import {httpGet, httpPost, removeRecord} from "./utils/http";
 import Login from '@/components/Login'
 import Navigation from '@/components/Navigation'
 import BookManage from "@/components/nav/BookManage";
-import Home from "@/components/nav/Home";
+import BookListManage from "@/components/nav/BookListManage";
 
 
 Vue.use(VueRouter);
@@ -31,11 +31,15 @@ const router = new VueRouter({
             children: [
                 {
                     path: '',
-                    component: Home
+                    component: BookManage
                 },
                 {
                     path: '/bookManage',
                     component: BookManage
+                },
+                {
+                    path: '/bookListManage',
+                    component: BookListManage
                 }
             ]
         },

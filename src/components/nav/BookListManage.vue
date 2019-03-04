@@ -1,12 +1,12 @@
 <template>
-    <div id="home">
-        未完成
+    <div id="bookListManage">
+        书单管理
     </div>
 </template>
 
 <script>
     export default {
-        name: "Home"
+        name: "BookListManage"
     }
 </script>
 
