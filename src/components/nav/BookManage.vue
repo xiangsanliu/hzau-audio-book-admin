@@ -2,9 +2,7 @@
     <div id="bookManage">
         <el-container>
             <el-main>
-                <el-button @click="editDialogVisible = true" plain type="primary">
-                    添加书籍
-                </el-button>
+                <el-button @click="editDialogVisible = true" plain type="primary">添加书籍</el-button>
                 <el-table :data="books">
                     <el-table-column label="id" prop="id" v-if="false"></el-table-column>
                     <el-table-column label="书名" prop="name"></el-table-column>
@@ -122,12 +120,11 @@
                 })
             },
             manageAudio: function (row) {
-                let _this = this;
-                _this.audioDialogVisible = true;
-                _this.currentBookName = row.name;
-                _this.currentBookId = row.id;
-                _this.uploadAction = '/api/file/upload/bookAudio/' + row.id + '/' + row.name;
-                _this.reloadBookAudio(row.id);
+                this.audioDialogVisible = true;
+                this.currentBookName = row.name;
+                this.currentBookId = row.id;
+                this.uploadAction = '/api/file/upload/bookAudio/' + row.id + '/' + row.name;
+                this.reloadBookAudio(row.id);
             },
             removeBook: function (row) {
                 let _this = this;
@@ -139,7 +136,7 @@
             },
             removeBookAudio: function (row) {
                 let _this = this;
-                this.removeRecord('/api/bookAudio/remove/', row.id, responseBean => {
+                _this.removeRecord('/api/bookAudio/remove/', row.id, responseBean => {
                     _this.$message.success(responseBean.msg);
                     _this.reloadBookAudio(_this.currentBookId);
                 });
@@ -155,19 +152,21 @@
             uploadChange: function (file, fileList) {
                 this.fileList = fileList.splice(-1);
             },
-            uploadSuccess: function () {
-                this.reloadBookAudio(this.currentBookId)
+            uploadSuccess: function (response) {
+                if (200 === response.status) {
+                    this.reloadBookAudio(this.currentBookId);
+                } else {
+                    this.$message.warning(response.msg);
+                }
             },
             uploadBefore: function (file) {
                 if (file.size > 31457280) {
-                    this.$message.error("文件大于30MB!");
+                    this.$message.warning("文件大于30MB!");
                     return false;
                 }
                 let fileSuffix = file.name.substring(file.name.lastIndexOf('.') + 1);
-                /*eslint no-console: ["error", { allow: ["warn", "error"] }] */
-                console.warn(fileSuffix);
                 if (fileSuffix.toLowerCase() !== 'mp3') {
-                    this.$message.error("所选文件不是音频!");
+                    this.$message.warning("所选文件不是音频!");
                     return false;
                 }
                 return true;
