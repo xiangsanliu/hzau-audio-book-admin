@@ -119,9 +119,16 @@
             },
             addBookToBookList: function () {
                 let _this = this;
+                let added = _this.books.some(item => {
+                    return _this.selectedBookId === item.id;
+                });
+                if (added) {
+                    this.$message.info('已添加该书籍');
+                    return;
+                }
                 _this.httpGet('/api/bookList/saveBook/' + this.currentBookListId + '/' + this.selectedBookId, () => {
                     _this.reloadBooks(_this.currentBookListId);
-                })
+                });
             },
             removeBookList: function (row) {
                 let _this = this;
