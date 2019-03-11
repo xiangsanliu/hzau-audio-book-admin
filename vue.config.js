@@ -8,6 +8,13 @@ module.exports = {
                 pathRewrite: {
                     '^/api': ''
                 }
+            },
+            '/music': {
+                target: 'http://localhost/',
+                changeOrigin: true,
+                pathRewrite: {
+                    '^/music': ''
+                }
             }
         },
         port: 8080

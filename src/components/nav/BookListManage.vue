@@ -94,8 +94,6 @@
                 let _this = this;
                 _this.httpGet('/api/bookList/getBooksByBookList/' + id, responseBean => {
                     _this.books = responseBean.content;
-                    /*eslint no-console: ["error", { allow: ["warn", "error"] }] */
-                    console.warn(_this.books);
                 });
             },
             editBookList: function (row) {

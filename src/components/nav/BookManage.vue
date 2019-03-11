@@ -53,24 +53,36 @@
                         <el-table-column label="路径" prop="path" v-if="false"></el-table-column>
                         <el-table-column label="操作">
                             <template slot-scope="scope">
-                                <el-button @click="downloadAudio(scope.row)" plain type="primary">下载</el-button>
+                                <el-button @click="playAudio(scope.row)" plain type="primary">播放</el-button>
                                 <el-button @click="removeBookAudio(scope.row)" plain type="danger">删除</el-button>
                             </template>
                         </el-table-column>
                     </el-table>
                 </el-dialog>
+                <el-dialog title="播放" :visible.sync="playVisible">
+                    <a-player autoplay :music="music"/>
+                </el-dialog>
             </el-main>
+
         </el-container>
     </div>
 </template>
 
 <script>
+    /*eslint no-console: ["error", { allow: ["warn", "error"] }] */
+
+    import APlayer from 'vue-aplayer';
+
     export default {
         name: "BookManager",
+        components: {
+            APlayer
+        },
         data() {
             return {
                 editDialogVisible: false,
                 audioDialogVisible: false,
+                playVisible: false,
                 books: null,
                 currentBookName: null,
                 currentBookId: null,
@@ -84,7 +96,8 @@
                 uploadAction: null,
                 formLabelWidth: '120px',
                 fileList: [],
-                bookAudios: null
+                bookAudios: null,
+                music: null
             }
         },
         created() {
@@ -123,7 +136,7 @@
                 this.audioDialogVisible = true;
                 this.currentBookName = row.name;
                 this.currentBookId = row.id;
-                this.uploadAction = '/api/file/upload/bookAudio/' + row.id + '/' + row.name;
+                this.uploadAction = '/api/bookAudio/upload/' + row.id + '/' + row.name;
                 this.reloadBookAudio(row.id);
             },
             removeBook: function (row) {
@@ -153,6 +166,7 @@
                 this.fileList = fileList.splice(-1);
             },
             uploadSuccess: function (response) {
+                console.warn(response);
                 if (200 === response.status) {
                     this.reloadBookAudio(this.currentBookId);
                 } else {
@@ -171,8 +185,13 @@
                 }
                 return true;
             },
-            downloadAudio: function (row) {
-                window.location.href = '/api/file/download/bookAudio/' + row.id;
+            playAudio: function (row) {
+                this.music = {
+                    src: '/music/' + row.url,
+                    title: row.name,
+                    artist: ' '
+                };
+                this.playVisible = true;
             }
         }
     }
