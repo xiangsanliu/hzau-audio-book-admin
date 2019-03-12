@@ -39,7 +39,7 @@
                 </el-dialog>
                 <el-dialog :title="currentBookName" :visible.sync="audioDialogVisible">
                     <el-upload multiple
-                               :action="uploadAction"
+                               :action="uploadUrl"
                                :file-list="fileList"
                                :on-change="uploadChange"
                                :on-success="uploadSuccess"
@@ -93,7 +93,7 @@
                     picPath: null,
                     desc: null
                 },
-                uploadAction: null,
+                uploadUrl: null,
                 formLabelWidth: '120px',
                 fileList: [],
                 bookAudios: null,
@@ -136,7 +136,7 @@
                 this.audioDialogVisible = true;
                 this.currentBookName = row.name;
                 this.currentBookId = row.id;
-                this.uploadAction = '/api/bookAudio/upload/' + row.id + '/' + row.name;
+                this.uploadUrl = '/api/bookAudio/upload/' + row.id + '/' + row.name;
                 this.reloadBookAudio(row.id);
             },
             removeBook: function (row) {
@@ -166,7 +166,6 @@
                 this.fileList = fileList.splice(-1);
             },
             uploadSuccess: function (response) {
-                console.warn(response);
                 if (200 === response.status) {
                     this.reloadBookAudio(this.currentBookId);
                 } else {
@@ -187,7 +186,7 @@
             },
             playAudio: function (row) {
                 this.music = {
-                    src: '/music/' + row.url,
+                    src: '/file/' + row.url,
                     title: row.name,
                     artist: ' '
                 };

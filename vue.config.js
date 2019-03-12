@@ -9,11 +9,11 @@ module.exports = {
                     '^/api': ''
                 }
             },
-            '/music': {
+            '/file': {
                 target: 'http://localhost/',
                 changeOrigin: true,
                 pathRewrite: {
-                    '^/music': ''
+                    '^/file': ''
                 }
             }
         },

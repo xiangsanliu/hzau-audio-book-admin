@@ -8,6 +8,8 @@ import Login from '@/components/Login'
 import Navigation from '@/components/Navigation'
 import BookManage from "@/components/nav/BookManage";
 import BookListManage from "@/components/nav/BookListManage";
+import ActivityManage from "@/components/nav/ActivityManage";
+import ShortAudioManage from "@/components/nav/ShortAudioManage";
 
 
 Vue.use(VueRouter);
@@ -26,20 +28,28 @@ const router = new VueRouter({
             component: Login
         },
         {
-            path: '/navigation',
+            path: '/',
             component: Navigation,
             children: [
                 {
-                    path: '',
+                    path: '/',
                     component: BookManage
                 },
                 {
-                    path: '/bookManage',
+                    path: '/book',
                     component: BookManage
                 },
                 {
-                    path: '/bookListManage',
+                    path: '/bookList',
                     component: BookListManage
+                },
+                {
+                    path: '/activity',
+                    component: ActivityManage
+                },
+                {
+                    path: '/shortAudio',
+                    component: ShortAudioManage
                 }
             ]
         },
