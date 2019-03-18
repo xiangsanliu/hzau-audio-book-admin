@@ -49,7 +49,8 @@
                         content: '测试内容'
                     }
                 ],
-                uploadUrl: '/api/activity/upload/',
+                uploadUrl: '',
+                baseUploadUrl: '/api/activity/upload/',
                 imageUrl: ''
             }
         },
@@ -59,7 +60,7 @@
         methods: {
             addBtnClicked: function () {
                 this.editDialogVisible = true;
-                this.uploadUrl += '0/非活动';
+                this.uploadUrl = this.baseUploadUrl + '0/非活动';
             },
             reLoadActivities: function () {
 
@@ -79,7 +80,7 @@
             ,
             handleAvatarSuccess(response) {
                 if (200 === response.status) {
-                    this.imageUrl = '/file/' + response.msg;
+                    this.imageUrl = '/file/' + response.msg + '?' + new Date().getTime();
                 } else {
                     this.$message.warning(response.msg);
                 }
