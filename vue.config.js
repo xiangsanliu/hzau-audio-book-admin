@@ -10,7 +10,7 @@ module.exports = {
                 }
             },
             '/file': {
-                target: 'http://localhost/',
+                target: 'http://192.168.1.241/',
                 changeOrigin: true,
                 pathRewrite: {
                     '^/file': ''
