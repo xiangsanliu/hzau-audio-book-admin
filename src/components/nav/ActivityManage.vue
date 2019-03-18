@@ -16,7 +16,28 @@
             </el-table>
 
             <el-dialog title="添加/编辑活动" :visible.sync="editDialogVisible">
+                
+                <el-form :model="activity">
+                    <el-form-item label="活动名">
+                        <el-input 
+                            :disabled="editDisabled"
+                            placeholder="请输入活动名称" 
+                            type="text" 
+                            v-model="activity.name"></el-input>
+                        <div style="margin: 20px 0;"></div>
+                        <el-input 
+                            v-if="null !== activity.id" 
+                            :disabled="editDisabled"
+                            placeholder="请输入活动简介" 
+                            type="textarea" 
+                            :autosize="{ minRows: 3, maxRows: 5}"
+                            maxlength="200"
+                            v-model="activity.desc"></el-input>
+                    </el-form-item>
+                </el-form>
                 <el-upload
+                        v-if="null !== activity.id"
+                        :disabled="editDisabled"
                         class="avatar-uploader"
                         :action="uploadUrl"
                         :show-file-list="false"
@@ -28,8 +49,11 @@
                         <i class="el-icon-plus avatar-uploader-icon"></i>
                     </div>
                 </el-upload>
+                <div class="dialog-footer" slot="footer">
+                    <el-button @click="clearForm">取 消</el-button>
+                    <el-button @click="creatActivity" type="primary">确 定</el-button>
+                </div>
             </el-dialog>
-
         </el-main>
     </el-container>
 </template>
@@ -42,13 +66,13 @@
         data() {
             return {
                 editDialogVisible: false,
-                activities: [
-                    {
-                        id: 1,
-                        name: '测试主题1',
-                        content: '测试内容'
-                    }
-                ],
+                activities: [],
+                editDisabled: false,
+                activity: {
+                    id: null,
+                    name :'',
+                    desc :''
+                },
                 uploadUrl: '',
                 baseUploadUrl: '/api/activity/upload/',
                 imageUrl: ''
@@ -58,26 +82,42 @@
             this.reLoadActivities();
         },
         methods: {
-            addBtnClicked: function () {
+            addBtnClicked : function(){
                 this.editDialogVisible = true;
-                this.uploadUrl = this.baseUploadUrl + '0/非活动';
             },
             reLoadActivities: function () {
-
-            }
-            ,
-            showActivityDetail: function () {
-
-            }
-            ,
+                let _this = this;
+                _this.httpGet('/api/activity/getAllActivities', responseBean => {
+                    _this.activities = responseBean.content;
+                });
+            },
+            showActivityDetail: function (row) {
+                this.editActivity(row)
+                this.editDisabled = true
+            },
+            creatActivity: function() {
+                let _this = this;
+                _this.httpPost('/api/activity/editActivity', _this.activity, responseBean => {
+                    _this.$message.success(responseBean.msg);   
+                    _this.reLoadActivities();
+                    _this.clearForm();
+                })
+            },
             editActivity: function (row) {
-                console.warn(row);
-            }
-            ,
+                this.editDialogVisible = true;
+                this.activity.id = row.id;
+                this.activity.name = row.name;
+                this.activity.desc = row.desc;
+                this.uploadUrl = this.baseUploadUrl + row.id + '/' + row.name ;
+                this.imageUrl = '/file/activities/' + row.name + '/' + row.name+'.jpg' + '?' + new Date().getTime();
+            },
             removeActivity: function (row) {
-                console.warn(row);
-            }
-            ,
+                let _this = this;
+                _this.removeRecord('/api/activity/remove/', row.id, responseBean => {
+                    _this.$message.success(responseBean.msg);
+                    _this.reLoadActivities();
+                });
+            },
             handleAvatarSuccess(response) {
                 if (200 === response.status) {
                     this.imageUrl = '/file/' + response.msg + '?' + new Date().getTime();
@@ -88,6 +128,13 @@
             ,
             beforeAvatarUpload() {
 
+            },
+            clearForm:function(){
+                this.editDialogVisible = false;
+                this.editDisabled = false
+                this.activity.id = null;
+                this.activity.name = null;
+                this.activity.desc = null;
             }
         }
     }
