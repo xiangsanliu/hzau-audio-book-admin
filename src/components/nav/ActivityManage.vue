@@ -16,23 +16,23 @@
             </el-table>
 
             <el-dialog title="添加/编辑活动" :visible.sync="editDialogVisible">
-                
+
                 <el-form :model="activity">
                     <el-form-item label="活动名">
-                        <el-input 
-                            :disabled="editDisabled"
-                            placeholder="请输入活动名称" 
-                            type="text" 
-                            v-model="activity.name"></el-input>
+                        <el-input
+                                :disabled="editDisabled"
+                                placeholder="请输入活动名称"
+                                type="text"
+                                v-model="activity.name"></el-input>
                         <div style="margin: 20px 0;"></div>
-                        <el-input 
-                            v-if="null !== activity.id" 
-                            :disabled="editDisabled"
-                            placeholder="请输入活动简介" 
-                            type="textarea" 
-                            :autosize="{ minRows: 3, maxRows: 5}"
-                            maxlength="200"
-                            v-model="activity.desc"></el-input>
+                        <el-input
+                                v-if="null !== activity.id"
+                                :disabled="editDisabled"
+                                placeholder="请输入活动简介"
+                                type="textarea"
+                                :autosize="{ minRows: 3, maxRows: 5}"
+                                maxlength="200"
+                                v-model="activity.desc"></el-input>
                     </el-form-item>
                 </el-form>
                 <el-upload
@@ -70,8 +70,8 @@
                 editDisabled: false,
                 activity: {
                     id: null,
-                    name :'',
-                    desc :''
+                    name: '',
+                    desc: ''
                 },
                 uploadUrl: '',
                 baseUploadUrl: '/api/activity/upload/',
@@ -82,7 +82,7 @@
             this.reLoadActivities();
         },
         methods: {
-            addBtnClicked : function(){
+            addBtnClicked: function () {
                 this.editDialogVisible = true;
             },
             reLoadActivities: function () {
@@ -92,13 +92,13 @@
                 });
             },
             showActivityDetail: function (row) {
-                this.editActivity(row)
+                this.editActivity(row);
                 this.editDisabled = true
             },
-            creatActivity: function() {
+            creatActivity: function () {
                 let _this = this;
                 _this.httpPost('/api/activity/editActivity', _this.activity, responseBean => {
-                    _this.$message.success(responseBean.msg);   
+                    _this.$message.success(responseBean.msg);
                     _this.reLoadActivities();
                     _this.clearForm();
                 })
@@ -108,8 +108,8 @@
                 this.activity.id = row.id;
                 this.activity.name = row.name;
                 this.activity.desc = row.desc;
-                this.uploadUrl = this.baseUploadUrl + row.id + '/' + row.name ;
-                this.imageUrl = '/file/activities/' + row.name + '/' + row.name+'.jpg' + '?' + new Date().getTime();
+                this.uploadUrl = this.baseUploadUrl + row.id + '/' + row.name;
+                this.imageUrl = '/file/activities/' + row.name + '/' + row.name + '.jpg' + '?' + new Date().getTime();
             },
             removeActivity: function (row) {
                 let _this = this;
@@ -129,9 +129,9 @@
             beforeAvatarUpload() {
 
             },
-            clearForm:function(){
+            clearForm: function () {
                 this.editDialogVisible = false;
-                this.editDisabled = false
+                this.editDisabled = false;
                 this.activity.id = null;
                 this.activity.name = null;
                 this.activity.desc = null;
