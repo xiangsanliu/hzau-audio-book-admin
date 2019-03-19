@@ -3,8 +3,13 @@
         <el-main>
             <el-table :data="audios">
                 <el-table-column label="id" prop="id" v-if="false"></el-table-column>
-                <el-table-column min-width="20%" fixed label="活动名" prop="actName"></el-table-column>
-                <el-table-column min-width="50%" label="内容" prop="content"></el-table-column>
+                <el-table-column min-width="15%" fixed label="活动名" prop="actName"></el-table-column>
+                <el-table-column min-width="45%" label="内容" prop="content"></el-table-column>
+                <el-table-column min-width="10%" label="上传时间" prop="uploadTime">
+                    <template slot-scope="scope">
+                        <span>{{scope.row.uploadTime.toLocaleString().substring(0, 16).replace('T', ' ')}}</span>
+                    </template>
+                </el-table-column>
                 <el-table-column min-width="10%" label="状态" prop="status" sortable
                                  :filters="[{text: '未审核', value: '未审核'},
                                             {text: '审核通过', value: '审核通过'},
