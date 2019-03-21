@@ -26,7 +26,6 @@
                                 v-model="activity.name"></el-input>
                         <div style="margin: 20px 0;"></div>
                         <el-input
-                                v-if="null !== activity.id"
                                 :disabled="editDisabled"
                                 placeholder="请输入活动简介"
                                 type="textarea"
@@ -83,7 +82,9 @@
         },
         methods: {
             addBtnClicked: function () {
+                this.clearForm();
                 this.editDialogVisible = true;
+                this.editDisabled = false;
             },
             reLoadActivities: function () {
                 let _this = this;
@@ -93,7 +94,7 @@
             },
             showActivityDetail: function (row) {
                 this.editActivity(row);
-                this.editDisabled = true
+                this.editDisabled = true;
             },
             creatActivity: function () {
                 let _this = this;
@@ -105,6 +106,7 @@
             },
             editActivity: function (row) {
                 this.editDialogVisible = true;
+                this.editDisabled = false;
                 this.activity.id = row.id;
                 this.activity.name = row.name;
                 this.activity.desc = row.desc;
