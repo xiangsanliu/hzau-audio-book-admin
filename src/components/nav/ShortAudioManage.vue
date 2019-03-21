@@ -1,23 +1,26 @@
 <template>
     <el-container>
         <el-main>
-            <el-table :data="audios">
+            <el-table :data="audios.slice((currentPage-1)*pageSize,currentPage*pageSize)" style="width: 100%">
                 <el-table-column label="id" prop="id" v-if="false"></el-table-column>
-                <el-table-column min-width="15%" fixed label="活动名" prop="actName"></el-table-column>
-                <el-table-column min-width="45%" label="内容" prop="content"></el-table-column>
-                <el-table-column min-width="10%" label="上传时间" prop="uploadTime">
+                <el-table-column width="100" label="活动名" prop="actName" fixed></el-table-column>
+                <el-table-column width="450" label="内容" prop="content"></el-table-column>
+                <el-table-column width="100" label="上传人" prop="name"></el-table-column>
+                <el-table-column width="100" label="专业班级" prop="majorAndClass"></el-table-column>
+                <el-table-column width="100" label="QQ" prop="qq"></el-table-column>
+                <el-table-column width="100" label="手机" prop="phoneNum"></el-table-column>
+                <el-table-column width="150" label="上传时间" prop="uploadTime">
                     <template slot-scope="scope">
                         <span>{{scope.row.uploadTime.toLocaleString().substring(0, 16).replace('T', ' ')}}</span>
                     </template>
                 </el-table-column>
-                <el-table-column min-width="10%" label="状态" prop="status" sortable
+                <el-table-column width="100" label="状态" prop="status" sortable
                                  :filters="[{text: '未审核', value: '未审核'},
                                             {text: '审核通过', value: '审核通过'},
                                             {text: '审核未通过', value: '审核未通过'}]"
                                  :filter-method="filterStatus">
-
                 </el-table-column>
-                <el-table-column min-width="20" label="操作">
+                <el-table-column width="280" label="操作" fixed="right">
                     <template slot-scope="scope">
                         <el-button @click="playShortAudio(scope.row)" plain type="primary">试听</el-button>
                         <el-button @click="approve(scope.row)" plain type="primary">通过</el-button>
@@ -25,6 +28,14 @@
                     </template>
                 </el-table-column>
             </el-table>
+            <div style="text-align: center; margin-top: 30px">
+                <el-pagination background
+                               layout="prev, pager, next"
+                               :page-size="pageSize"
+                               :total="audios.length"
+                               @current-change="handlePageChange">
+                </el-pagination>
+            </div>
             <el-dialog title="试听" :visible.sync="playVisible">
                 <a-player autoplay :music="music"/>
             </el-dialog>
@@ -46,7 +57,9 @@
             return {
                 audios: [],
                 playVisible: false,
-                music: null
+                music: null,
+                pageSize: 10,
+                currentPage: 1
             }
         },
         created() {
@@ -82,6 +95,10 @@
             },
             filterStatus: function (value, row) {
                 return row.status === value;
+            },
+            handlePageChange: function (currentPage) {
+                this.currentPage = currentPage;
+                console.warn(this.currentPage)
             }
         }
     }

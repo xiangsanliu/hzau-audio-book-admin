@@ -8,6 +8,7 @@
                     <el-table-column label="书名" prop="name"></el-table-column>
                     <el-table-column label="作者" prop="author"></el-table-column>
                     <el-table-column label="简介" prop="desc"></el-table-column>
+                    <el-table-column label="来源" prop="source"></el-table-column>
                     <el-table-column label="操作">
                         <template slot-scope="scope">
                             <el-button @click="editBook(scope.row)" plain type="primary">编辑</el-button>
@@ -24,6 +25,9 @@
                         </el-form-item>
                         <el-form-item :label-width="formLabelWidth" label="作者">
                             <el-input placeholder="请输入作者" type="text" v-model="book.author"></el-input>
+                        </el-form-item>
+                        <el-form-item :label-width="formLabelWidth" label="声音来源">
+                            <el-input placeholder="请输入声音来源" type="text" v-model="book.source"></el-input>
                         </el-form-item>
                         <el-form-item :label-width="formLabelWidth" label="封面链接">
                             <el-input placeholder="请输入封面链接" type="text" v-model="book.picPath"></el-input>
@@ -91,7 +95,8 @@
                     name: null,
                     author: null,
                     picPath: null,
-                    desc: null
+                    desc: null,
+                    source: null
                 },
                 uploadUrl: null,
                 formLabelWidth: '120px',
@@ -123,6 +128,7 @@
                 this.book.author = row.author;
                 this.book.picPath = row.picPath;
                 this.book.desc = row.desc;
+                this.book.source = row.source;
             },
             createBook: function () {
                 let _this = this;
@@ -161,6 +167,7 @@
                 this.book.author = null;
                 this.book.picPath = null;
                 this.book.desc = null;
+                this.book.source = null;
             },
             uploadChange: function (file, fileList) {
                 this.fileList = fileList.splice(-1);
