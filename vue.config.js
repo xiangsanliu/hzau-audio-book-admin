@@ -3,14 +3,14 @@ module.exports = {
         disableHostCheck: true,
         proxy: {
             '/api': {
-                target: 'http://192.168.1.241:8081',
+                target: 'http://localhost:8081',
                 changeOrigin: true,
                 pathRewrite: {
                     '^/api': ''
                 }
             },
             '/file': {
-                target: 'http://192.168.1.241/',
+                target: 'http://localhost/',
                 changeOrigin: true,
                 pathRewrite: {
                     '^/file': ''
