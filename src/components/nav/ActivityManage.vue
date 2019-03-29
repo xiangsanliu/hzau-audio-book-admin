@@ -73,7 +73,7 @@
                     desc: ''
                 },
                 uploadUrl: '',
-                baseUploadUrl: '/api/activity/upload/',
+                baseUploadUrl: `${this.protoUploadUrl}activity/upload/`,
                 imageUrl: ''
             }
         },
@@ -88,7 +88,7 @@
             },
             reLoadActivities: function () {
                 let _this = this;
-                _this.httpGet('/api/activity/getAllActivities', responseBean => {
+                _this.httpGet('/activity/getAllActivities', responseBean => {
                     _this.activities = responseBean.content;
                 });
             },
@@ -98,7 +98,7 @@
             },
             creatActivity: function () {
                 let _this = this;
-                _this.httpPost('/api/activity/editActivity', _this.activity, responseBean => {
+                _this.httpPost('/activity/editActivity', _this.activity, responseBean => {
                     _this.$message.success(responseBean.msg);
                     _this.reLoadActivities();
                     _this.clearForm();
@@ -111,18 +111,18 @@
                 this.activity.name = row.name;
                 this.activity.desc = row.desc;
                 this.uploadUrl = this.baseUploadUrl + row.id + '/' + row.name;
-                this.imageUrl = '/file/activities/' + row.name + '/' + row.name + '.jpg' + '?' + new Date().getTime();
+                this.imageUrl = this.fileUrl + 'activities/' + row.name + '/' + row.name + '.jpg' + '?' + new Date().getTime();
             },
             removeActivity: function (row) {
                 let _this = this;
-                _this.removeRecord('/api/activity/remove/', row.id, responseBean => {
+                _this.removeRecord('/activity/remove/', row.id, responseBean => {
                     _this.$message.success(responseBean.msg);
                     _this.reLoadActivities();
                 });
             },
             handleAvatarSuccess(response) {
                 if (200 === response.status) {
-                    this.imageUrl = '/file/' + response.msg + '?' + new Date().getTime();
+                    this.imageUrl = this.fileUrl + response.msg + '?' + new Date().getTime();
                 } else {
                     this.$message.warning(response.msg);
                 }

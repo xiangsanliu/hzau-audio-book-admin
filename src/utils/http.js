@@ -1,6 +1,9 @@
 import {Message, MessageBox} from "element-ui";
 import axios from 'axios';
 
+axios.defaults.baseURL = 'http://localhost:8081/';
+
+
 /**
  * HTTP GET
  * @param url url
@@ -19,7 +22,8 @@ export const httpGet = (url, onSuccess) => {
  * @param url url
  * @param postData Post Data
  * @param onSuccess Success Callback
- * @param onFailure Failure Callback
+ * @param onFailure
+ * axios.iFailure Callback
  */
 export const httpPost = (url, postData, onSuccess, onFailure) => {
     axios.post(url, postData).then(response => {

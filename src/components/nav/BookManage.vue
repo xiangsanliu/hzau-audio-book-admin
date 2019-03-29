@@ -111,13 +111,13 @@
         methods: {
             reloadBook: function () {
                 let _this = this;
-                _this.httpGet('/api/book/getAllBooks', responseBean => {
+                _this.httpGet('/book/getAllBooks', responseBean => {
                     _this.books = responseBean.content;
                 });
             },
             reloadBookAudio: function (id) {
                 let _this = this;
-                _this.httpGet('/api/bookAudio/getBookAudiosByBook/' + id, responseBean => {
+                _this.httpGet('/bookAudio/getBookAudiosByBook/' + id, responseBean => {
                     _this.bookAudios = responseBean.content;
                 });
             },
@@ -132,7 +132,7 @@
             },
             createBook: function () {
                 let _this = this;
-                _this.httpPost('/api/book/editBook', _this.book, responseBean => {
+                _this.httpPost('/book/editBook', _this.book, responseBean => {
                     _this.$message.success(responseBean.msg);
                     _this.reloadBook();
                     _this.clearForm();
@@ -142,12 +142,12 @@
                 this.audioDialogVisible = true;
                 this.currentBookName = row.name;
                 this.currentBookId = row.id;
-                this.uploadUrl = '/api/bookAudio/upload/' + row.id + '/' + row.name;
+                this.uploadUrl = `${this.protoUploadUrl}bookAudio/upload/${row.id}/${row.name}`;
                 this.reloadBookAudio(row.id);
             },
             removeBook: function (row) {
                 let _this = this;
-                _this.removeRecord('/api/book/remove/', row.id, responseBean => {
+                _this.removeRecord('/book/remove/', row.id, responseBean => {
                     _this.$message.success(responseBean.msg);
                     _this.reloadBook();
                 });
@@ -155,7 +155,7 @@
             },
             removeBookAudio: function (row) {
                 let _this = this;
-                _this.removeRecord('/api/bookAudio/remove/', row.id, responseBean => {
+                _this.removeRecord('/bookAudio/remove/', row.id, responseBean => {
                     _this.$message.success(responseBean.msg);
                     _this.reloadBookAudio(_this.currentBookId);
                 });
@@ -193,7 +193,7 @@
             },
             playAudio: function (row) {
                 this.music = {
-                    src: '/file/' + row.url,
+                    src: this.fileUrl + row.url,
                     title: row.name,
                     artist: ' '
                 };

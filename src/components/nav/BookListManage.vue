@@ -79,20 +79,20 @@
         created() {
             let _this = this;
             _this.reloadBookList();
-            _this.httpGet('/api/book/getAllBooks', responseBean => {
+            _this.httpGet('/book/getAllBooks', responseBean => {
                 _this.selectingBooks = responseBean.content;
             })
         },
         methods: {
             reloadBookList: function () {
                 let _this = this;
-                _this.httpGet('/api/bookList/getAllBookLists', responseBean => {
+                _this.httpGet('/bookList/getAllBookLists', responseBean => {
                     _this.bookLists = responseBean.content;
                 });
             },
             reloadBooks: function (id) {
                 let _this = this;
-                _this.httpGet('/api/bookList/getBooksByBookList/' + id, responseBean => {
+                _this.httpGet('/bookList/getBooksByBookList/' + id, responseBean => {
                     _this.books = responseBean.content;
                 });
             },
@@ -109,7 +109,7 @@
             },
             createBookList: function () {
                 let _this = this;
-                _this.httpPost('/api/bookList/editBookList', _this.bookList, responseBean => {
+                _this.httpPost('/bookList/editBookList', _this.bookList, responseBean => {
                     _this.$message.success(responseBean.msg);
                     _this.reloadBookList();
                     _this.clearBookList();
@@ -124,20 +124,20 @@
                     this.$message.info('已添加该书籍');
                     return;
                 }
-                _this.httpGet('/api/bookList/saveBook/' + this.currentBookListId + '/' + this.selectedBookId, () => {
+                _this.httpGet('/bookList/saveBook/' + this.currentBookListId + '/' + this.selectedBookId, () => {
                     _this.reloadBooks(_this.currentBookListId);
                 });
             },
             removeBookList: function (row) {
                 let _this = this;
-                _this.removeRecord('/api/bookList/remove/', row.id, responseBean => {
+                _this.removeRecord('/bookList/remove/', row.id, responseBean => {
                     _this.$message.success(responseBean.msg);
                     _this.reloadBookList();
                 });
             },
             removeBook: function (row) {
                 let _this = this;
-                _this.removeRecord('/api/bookList/removeBook/' + _this.currentBookListId + '/', row.id, responseBean => {
+                _this.removeRecord('/bookList/removeBook/' + _this.currentBookListId + '/', row.id, responseBean => {
                     _this.$message.success(responseBean.msg);
                     _this.reloadBooks(_this.currentBookListId);
                 });

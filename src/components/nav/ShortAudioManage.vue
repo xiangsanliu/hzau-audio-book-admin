@@ -93,13 +93,13 @@
         methods: {
             reloadAudios: function () {
                 let _this = this;
-                _this.httpGet('/api/shortAudio/getAllShortAudios', responseBean => {
+                _this.httpGet('/shortAudio/getAllShortAudios', responseBean => {
                     _this.audios = responseBean.content;
                 });
             },
             playShortAudio: function (row) {
                 this.music = {
-                    src: `/file/activities/${row.actName}/${row.fileName}`,
+                    src: `${this.fileUrl}activities/${row.actName}/${row.fileName}`,
                     title: row.actName,
                     artist: ' '
                 };
@@ -108,7 +108,7 @@
             approve: function (row) {
                 console.warn(row);
                 let _this = this;
-                _this.httpGet(`/api/shortAudio/approve/${row.id}`, () => {
+                _this.httpGet(`/shortAudio/approve/${row.id}`, () => {
                     _this.reloadAudios();
                 });
             },
@@ -126,7 +126,7 @@
             },
             postReason: function () {
                 let _this = this;
-                _this.httpPost('/api/shortAudio/disApprove/', _this.currentShortAudio, () => {
+                _this.httpPost('/shortAudio/disApprove/', _this.currentShortAudio, () => {
                     _this.clearForm();
                     _this.reloadAudios();
                 });
