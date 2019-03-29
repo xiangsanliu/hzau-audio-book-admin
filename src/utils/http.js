@@ -1,7 +1,7 @@
 import {Message, MessageBox} from "element-ui";
 import axios from 'axios';
 
-axios.defaults.baseURL = 'http://localhost:8081/';
+axios.defaults.baseURL = 'http://211.69.130.104:8081/';
 
 
 /**

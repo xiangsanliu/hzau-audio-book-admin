@@ -17,8 +17,8 @@ Vue.use(ElementUI);
 Vue.prototype.httpGet = httpGet;
 Vue.prototype.httpPost = httpPost;
 Vue.prototype.removeRecord = removeRecord;
-Vue.prototype.fileUrl = 'http://localhost/';
-Vue.prototype.protoUploadUrl = 'http://localhost:8081/';
+Vue.prototype.fileUrl = 'http://211.69.130.104/';
+Vue.prototype.protoUploadUrl = 'http://211.69.130.104:8081/';
 Vue.config.productionTip = false;
 
 const router = new VueRouter({
