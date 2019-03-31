@@ -1,4 +1,4 @@
-import {Message, MessageBox} from "element-ui";
+import {Loading, Message, MessageBox} from "element-ui";
 import axios from 'axios';
 
 axios.defaults.baseURL = 'http://211.69.130.104:8081/';
@@ -10,9 +10,17 @@ axios.defaults.baseURL = 'http://211.69.130.104:8081/';
  * @param onSuccess Success Callback
  */
 export const httpGet = (url, onSuccess) => {
+    let loadingInstance = Loading.service(
+        {
+            fullscreen: true,
+            text: "加载中"
+        }
+    );
     axios.get(url).then(response => {
+        loadingInstance.close();
         handleResponseBean(response.data, onSuccess);
     }).catch(error => {
+        loadingInstance.close();
         Message.error(error.response.data);
     })
 };
@@ -26,9 +34,17 @@ export const httpGet = (url, onSuccess) => {
  * axios.iFailure Callback
  */
 export const httpPost = (url, postData, onSuccess, onFailure) => {
+    let loadingInstance = Loading.service(
+        {
+            fullscreen: true,
+            text: "加载中"
+        }
+    );
     axios.post(url, postData).then(response => {
+        loadingInstance.close();
         handleResponseBean(response.data, onSuccess, onFailure);
     }).catch(error => {
+        loadingInstance.close();
         Message.error(error.response.data);
     })
 };
