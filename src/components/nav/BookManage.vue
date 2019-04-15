@@ -36,6 +36,18 @@
                             <el-input placeholder="请输入简介" type="textarea" v-model="book.desc"></el-input>
                         </el-form-item>
                     </el-form>
+                    <el-upload
+                            class="avatar-uploader"
+                            :action="imageUploadUrl"
+                            :show-file-list="false"
+                            :on-success="handleAvatarSuccess"
+                            :before-upload="beforeAvatarUpload">
+                        <img v-if="imageUrl" :src="imageUrl" class="avatar" alt="">
+                        <div v-else>
+                            <div slot="tip" class="el-upload__tip">只能上传jpg/png文件，且不超过500kb</div>
+                            <i class="el-icon-plus avatar-uploader-icon"></i>
+                        </div>
+                    </el-upload>
                     <div class="dialog-footer" slot="footer">
                         <el-button @click="clearForm">取 消</el-button>
                         <el-button @click="createBook" type="primary">确 定</el-button>
@@ -102,7 +114,10 @@
                 formLabelWidth: '120px',
                 fileList: [],
                 bookAudios: null,
-                music: null
+                music: null,
+                imageUploadUrl: '',
+                baseUploadUrl: `${this.protoUploadUrl}book/upload`,
+                imageUrl: ''
             }
         },
         created() {
@@ -129,6 +144,8 @@
                 this.book.picPath = row.picPath;
                 this.book.desc = row.desc;
                 this.book.source = row.source;
+                this.imageUploadUrl = `${this.baseUploadUrl}/${row.id}/${row.name}`;
+                this.imageUrl = `${this.fileUrl}/books/${row.name}/${row.name}.jpg?${new Date().getTime()}`
             },
             createBook: function () {
                 let _this = this;
@@ -198,11 +215,48 @@
                     artist: ' '
                 };
                 this.playVisible = true;
+            },
+            handleAvatarSuccess(response) {
+                if (200 === response.status) {
+                    this.imageUrl = `${this.fileUrl}/${response.msg}?${new Date().getTime()}`;
+                } else {
+                    this.$message.warning(response.msg);
+                }
+            },
+            beforeAvatarUpload() {
+
             }
         }
     }
 </script>
 
 <style scoped>
+
+    .avatar-uploader .el-upload {
+        border: 1px dashed #d9d9d9;
+        border-radius: 6px;
+        cursor: pointer;
+        position: relative;
+        overflow: hidden;
+    }
+
+    .avatar-uploader .el-upload:hover {
+        border-color: #409EFF;
+    }
+
+    .avatar-uploader-icon {
+        font-size: 28px;
+        color: #8c939d;
+        width: 178px;
+        height: 178px;
+        line-height: 178px;
+        text-align: center;
+    }
+
+    .avatar {
+        width: 178px;
+        height: 178px;
+        display: block;
+    }
 
 </style>

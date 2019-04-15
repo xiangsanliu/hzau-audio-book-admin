@@ -126,8 +126,7 @@
                 } else {
                     this.$message.warning(response.msg);
                 }
-            }
-            ,
+            },
             beforeAvatarUpload() {
 
             },
