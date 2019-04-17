@@ -29,7 +29,11 @@
             }
         },
         created() {
-            this.$router.replace('/book');
+            this.httpGet("/validate", () => {
+                this.$router.replace('/book');
+            }, () => {
+                this.$router.replace('/login');
+            });
         }
     }
 </script>

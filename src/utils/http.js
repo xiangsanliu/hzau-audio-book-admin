@@ -9,8 +9,9 @@ axios.defaults.baseURL = 'http://211.69.130.104:8081/';
  * HTTP GET
  * @param url url
  * @param onSuccess Success Callback
+ * @param onFailure Failure Callback
  */
-export const httpGet = (url, onSuccess) => {
+export const httpGet = (url, onSuccess, onFailure) => {
     let loadingInstance = Loading.service(
         {
             fullscreen: true,
@@ -19,7 +20,7 @@ export const httpGet = (url, onSuccess) => {
     );
     axios.get(url).then(response => {
         loadingInstance.close();
-        handleResponseBean(response.data, onSuccess);
+        handleResponseBean(response.data, onSuccess, onFailure);
     }).catch(error => {
         loadingInstance.close();
         Message.error(error.response.data);
