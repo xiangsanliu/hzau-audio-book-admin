@@ -1,6 +1,7 @@
 import {Loading, Message, MessageBox} from "element-ui";
 import axios from 'axios';
 
+axios.defaults.withCredentials = true;
 axios.defaults.baseURL = 'http://211.69.130.104:8081/';
 
 

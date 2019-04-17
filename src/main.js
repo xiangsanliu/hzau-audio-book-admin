@@ -33,10 +33,6 @@ const router = new VueRouter({
             component: Navigation,
             children: [
                 {
-                    path: '/',
-                    component: BookManage
-                },
-                {
                     path: '/book',
                     component: BookManage
                 },

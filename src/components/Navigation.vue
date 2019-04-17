@@ -28,6 +28,9 @@
                 router: this.$router
             }
         },
+        created() {
+            this.$router.replace('/book');
+        }
     }
 </script>
 
