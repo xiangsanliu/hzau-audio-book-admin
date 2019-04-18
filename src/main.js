@@ -10,6 +10,8 @@ import BookManage from "@/components/nav/BookManage";
 import BookListManage from "@/components/nav/BookListManage";
 import ActivityManage from "@/components/nav/ActivityManage";
 import ShortAudioManage from "@/components/nav/ShortAudioManage";
+import ShortCommentManage from "@/components/nav/ShortCommentManage";
+import BookCommentManage from "@/components/nav/BookCommentManage";
 
 
 Vue.use(VueRouter);
@@ -47,6 +49,14 @@ const router = new VueRouter({
                 {
                     path: '/shortAudio',
                     component: ShortAudioManage
+                },
+                {
+                    path: '/shortComment',
+                    component: ShortCommentManage
+                },
+                {
+                    path: '/bookComment',
+                    component: BookCommentManage
                 }
             ]
         },

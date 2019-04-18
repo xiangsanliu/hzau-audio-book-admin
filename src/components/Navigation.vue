@@ -14,6 +14,11 @@
             <el-menu-item index="4" @click="router.replace('/shortAudio')">
                 短音频审核
             </el-menu-item>
+            <el-submenu index="5">
+                <template slot="title">评论管理</template>
+                <el-menu-item index="5-2" @click="router.replace('/bookComment')">书籍音频评论审核</el-menu-item>
+                <el-menu-item index="5-1" @click="router.replace('/shortComment')">短音频评论审核</el-menu-item>
+            </el-submenu>
         </el-menu>
         <router-view></router-view>
     </div>
