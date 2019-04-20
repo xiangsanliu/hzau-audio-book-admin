@@ -98,7 +98,7 @@
             },
             creatActivity: function () {
                 let _this = this;
-                this.activity.name.trim();
+                this.activity.name = this.activity.name.replace(/\s/g, "");
                 _this.httpPost('/activity/editActivity', _this.activity, responseBean => {
                     _this.$message.success(responseBean.msg);
                     _this.reLoadActivities();

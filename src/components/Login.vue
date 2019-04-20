@@ -26,8 +26,6 @@
         methods: {
             login: function () {
                 let _this = this;
-                this.user.password.trim();
-                this.password.trim();
                 _this.httpPost('/login', this.user, () => {
                     _this.$router.replace('/book');
                 }, responseBean => {

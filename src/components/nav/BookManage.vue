@@ -151,7 +151,7 @@
             },
             createBook: function () {
                 let _this = this;
-                this.book.name.trim();
+                this.book.name = this.book.name.replace(/\s/g, "");
                 _this.httpPost('/book/editBook', _this.book, responseBean => {
                     _this.$message.success(responseBean.msg);
                     _this.reloadBook();
