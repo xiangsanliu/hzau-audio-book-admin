@@ -147,6 +147,8 @@
                 this.imageUploadUrl = `${this.baseUploadUrl}/${row.id}/${row.name}`;
                 if (row.posterUploaded) {
                     this.imageUrl = `${this.fileUrl}/books/${row.name}/${row.name}.jpg?${new Date().getTime()}`
+                } else {
+                    this.imageUrl = '';
                 }
             },
             createBook: function () {
