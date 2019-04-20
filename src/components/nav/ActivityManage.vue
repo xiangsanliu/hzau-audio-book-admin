@@ -73,7 +73,7 @@
                     desc: ''
                 },
                 uploadUrl: '',
-                baseUploadUrl: `${this.protoUploadUrl}activity/upload/`,
+                baseUploadUrl: `${this.protoUploadUrl}activity/upload`,
                 imageUrl: ''
             }
         },
@@ -98,6 +98,7 @@
             },
             creatActivity: function () {
                 let _this = this;
+                this.activity.name.trim();
                 _this.httpPost('/activity/editActivity', _this.activity, responseBean => {
                     _this.$message.success(responseBean.msg);
                     _this.reLoadActivities();
@@ -110,8 +111,10 @@
                 this.activity.id = row.id;
                 this.activity.name = row.name;
                 this.activity.desc = row.desc;
-                this.uploadUrl = this.baseUploadUrl + row.id + '/' + row.name;
-                this.imageUrl = this.fileUrl + 'activities/' + row.name + '/' + row.name + '.jpg' + '?' + new Date().getTime();
+                this.uploadUrl = `${this.baseUploadUrl}/${row.id}/${row.name}`;
+                if (row.posterUploaded) {
+                    this.imageUrl = `${this.fileUrl}activities/${row.name}/${row.name}.jpg?${new Date().getTime()}`;
+                }
             },
             removeActivity: function (row) {
                 let _this = this;

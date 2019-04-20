@@ -145,10 +145,13 @@
                 this.book.desc = row.desc;
                 this.book.source = row.source;
                 this.imageUploadUrl = `${this.baseUploadUrl}/${row.id}/${row.name}`;
-                this.imageUrl = `${this.fileUrl}/books/${row.name}/${row.name}.jpg?${new Date().getTime()}`
+                if (row.posterUploaded) {
+                    this.imageUrl = `${this.fileUrl}/books/${row.name}/${row.name}.jpg?${new Date().getTime()}`
+                }
             },
             createBook: function () {
                 let _this = this;
+                this.book.name.trim();
                 _this.httpPost('/book/editBook', _this.book, responseBean => {
                     _this.$message.success(responseBean.msg);
                     _this.reloadBook();
