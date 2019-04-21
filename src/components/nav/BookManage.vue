@@ -19,20 +19,17 @@
                 </el-table>
                 <el-dialog title="添加/编辑书籍" :visible.sync="editDialogVisible" :before-close="clearForm">
                     <img :src="book.picPath" alt=""/>
-                    <el-form :model="book">
-                        <el-form-item :label-width="formLabelWidth" label="书名">
+                    <el-form :model="book" :rules="rules">
+                        <el-form-item :label-width="formLabelWidth" label="书名" prop="name">
                             <el-input placeholder="请输入书名" type="text" v-model="book.name"></el-input>
                         </el-form-item>
-                        <el-form-item :label-width="formLabelWidth" label="作者">
+                        <el-form-item :label-width="formLabelWidth" label="作者" prop="author">
                             <el-input placeholder="请输入作者" type="text" v-model="book.author"></el-input>
                         </el-form-item>
-                        <el-form-item :label-width="formLabelWidth" label="声音来源">
-                            <el-input placeholder="请输入声音来源" type="text" v-model="book.source"></el-input>
-                        </el-form-item>
-                        <el-form-item :label-width="formLabelWidth" label="封面链接">
+                        <el-form-item :label-width="formLabelWidth" label="封面链接" prop="picPath">
                             <el-input placeholder="请输入封面链接" type="text" v-model="book.picPath"></el-input>
                         </el-form-item>
-                        <el-form-item :label-width="formLabelWidth" label="简介">
+                        <el-form-item :label-width="formLabelWidth" label="简介" prop="desc">
                             <el-input placeholder="请输入简介" type="textarea" v-model="book.desc"></el-input>
                         </el-form-item>
                     </el-form>
@@ -117,7 +114,23 @@
                 music: null,
                 imageUploadUrl: '',
                 baseUploadUrl: `${this.protoUploadUrl}book/upload`,
-                imageUrl: ''
+                imageUrl: '',
+                rules: {
+                    name: [
+                        {required: true, message: '请输入书名', trigger: 'blur'},
+                        {max: 50, message: '书名长度最长为50', trigger: 'blur'}
+                    ],
+                    author: [
+                        {required: true, message: '请输入作者', trigger: 'blur'},
+                        {max: 50, message: '作者长度最长为50', trigger: 'blur'}
+                    ],
+                    picPath: [
+                        {max: 255, message: '书籍封面链接最长为255', trigger: 'blur'}
+                    ],
+                    desc: [
+                        {max: 255, message: '简介最长为255', trigger: 'blur'}
+                    ]
+                }
             }
         },
         created() {
@@ -154,6 +167,22 @@
             createBook: function () {
                 let _this = this;
                 this.book.name = this.book.name.replace(/\s/g, "");
+                if (this.book.name.length > 50) {
+                    this.$message.error('书名最长50字');
+                    return;
+                }
+                if (this.book.author.length > 50) {
+                    this.$message.error('作者最长50字');
+                    return;
+                }
+                if (this.book.picPath.length > 255) {
+                    this.$message.error('封面链接最长255字');
+                    return;
+                }
+                if (this.book.desc.length > 255) {
+                    this.$message.error('简介最长255字');
+                    return;
+                }
                 _this.httpPost('/book/editBook', _this.book, responseBean => {
                     _this.$message.success(responseBean.msg);
                     _this.reloadBook();

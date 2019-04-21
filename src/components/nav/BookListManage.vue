@@ -15,8 +15,8 @@
                     </el-table-column>
                 </el-table>
                 <el-dialog title="添加/编辑书单" :visible.sync="editDialogVisible" :before-close="clearBookList">
-                    <el-form :model="bookList">
-                        <el-form-item label="书单名">
+                    <el-form :model="bookList" :rules="rules">
+                        <el-form-item label-width="120px" label="书单名" prop="name">
                             <el-input placeholder="请输入书单名" type="text" v-model="bookList.name"></el-input>
                         </el-form-item>
                     </el-form>
@@ -73,7 +73,13 @@
                 selectedBookId: null,
                 books: null,
                 currentBookListName: null,
-                currentBookListId: null
+                currentBookListId: null,
+                rules: {
+                    name: [
+                        {required: true, message: '请输入书单名', trigger: 'blur'},
+                        {max: 50, message: '书单名最长50字', trigger: 'blur'}
+                    ]
+                }
             }
         },
         created() {
@@ -109,6 +115,10 @@
             },
             createBookList: function () {
                 let _this = this;
+                if (this.bookList.name.length > 50) {
+                    this.$message.error('书单名最长50字');
+                    return;
+                }
                 _this.httpPost('/bookList/editBookList', _this.bookList, responseBean => {
                     _this.$message.success(responseBean.msg);
                     _this.reloadBookList();

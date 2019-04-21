@@ -3,12 +3,13 @@
         <el-main>
             <el-table :data="audios.slice((currentPage-1)*pageSize,currentPage*pageSize)" style="width: 100%">
                 <el-table-column label="id" prop="id" v-if="false"></el-table-column>
-                <el-table-column width="100" label="活动名" prop="actName" fixed></el-table-column>
-                <el-table-column width="450" label="内容" prop="content"></el-table-column>
+                <el-table-column width="100" label="标题" prop="title" fixed></el-table-column>
+                <el-table-column width="100" label="活动名" prop="actName"></el-table-column>
+                <el-table-column label="内容" prop="content"></el-table-column>
                 <el-table-column width="100" label="专业班级" prop="majorAndClass"></el-table-column>
                 <el-table-column width="100" label="姓名" prop="name"></el-table-column>
                 <el-table-column width="100" label="QQ" prop="qq"></el-table-column>
-                <el-table-column width="100" label="手机" prop="phoneNum"></el-table-column>
+                <el-table-column width="130" label="手机" prop="phoneNum"></el-table-column>
                 <el-table-column width="150" label="上传时间" prop="uploadTime">
                     <template slot-scope="scope">
                         <span>{{scope.row.uploadTime.toLocaleString().substring(0, 16).replace('T', ' ')}}</span>
@@ -47,8 +48,8 @@
                 <a-player autoplay :music="music"/>
             </el-dialog>
             <el-dialog title="未通过原因" :visible.sync="reasonVisible" :before-close="clearForm">
-                <el-form :model="currentShortAudio">
-                    <el-form-item label-width="120px" label="原因">
+                <el-form :model="currentShortAudio" :rules="rules">
+                    <el-form-item label-width="120px" label="原因" prop="reason">
                         <el-input placeholder="不超过20字" type="text" v-model="currentShortAudio.reason"></el-input>
                     </el-form-item>
                 </el-form>
@@ -84,7 +85,13 @@
                     reason: null,
                     approved: null
                 },
-                currentPage: 1
+                currentPage: 1,
+                rules: {
+                    reason: [
+                        {required: true, message: '请输入理由', trigger: 'blur'},
+                        {max: 20, message: '理由长度最长为20', trigger: 'blur'}
+                    ]
+                }
             }
         },
         created() {
@@ -106,7 +113,6 @@
                 this.playVisible = true;
             },
             approve: function (row) {
-                console.warn(row);
                 let _this = this;
                 _this.httpGet(`/shortAudio/approve/${row.id}`, () => {
                     _this.reloadAudios();
@@ -126,6 +132,10 @@
             },
             postReason: function () {
                 let _this = this;
+                if (_this.currentShortAudio.reason.length > 20) {
+                    this.$message.error("理由不超过20字！");
+                    return;
+                }
                 _this.httpPost('/shortAudio/disApprove/', _this.currentShortAudio, () => {
                     _this.clearForm();
                     _this.reloadAudios();
