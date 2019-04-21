@@ -168,19 +168,19 @@
                 let _this = this;
                 this.book.name = this.book.name.replace(/\s/g, "");
                 if (this.book.name.length > 50) {
-                    this.$message.error('书名最长50字');
+                    this.$message.warning('书名最长50字');
                     return;
                 }
                 if (this.book.author.length > 50) {
-                    this.$message.error('作者最长50字');
+                    this.$message.warning('作者最长50字');
                     return;
                 }
                 if (this.book.picPath.length > 255) {
-                    this.$message.error('封面链接最长255字');
+                    this.$message.warning('封面链接最长255字');
                     return;
                 }
                 if (this.book.desc.length > 255) {
-                    this.$message.error('简介最长255字');
+                    this.$message.warning('简介最长255字');
                     return;
                 }
                 _this.httpPost('/book/editBook', _this.book, responseBean => {

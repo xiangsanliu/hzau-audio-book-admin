@@ -116,7 +116,7 @@
             createBookList: function () {
                 let _this = this;
                 if (this.bookList.name.length > 50) {
-                    this.$message.error('书单名最长50字');
+                    this.$message.warning('书单名最长50字');
                     return;
                 }
                 _this.httpPost('/bookList/editBookList', _this.bookList, responseBean => {

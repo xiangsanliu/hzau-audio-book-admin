@@ -94,11 +94,11 @@
                 let _this = this;
                 this.activity.name = this.activity.name.replace(/\s/g, "");
                 if (this.activity.name.length > 50) {
-                    this.$message.error('活动名最长50字');
+                    this.$message.warning('活动名最长50字');
                     return;
                 }
                 if (this.activity.desc.length > 255) {
-                    this.$message.error('活动简介最长255字');
+                    this.$message.warning('活动简介最长255字');
                     return;
                 }
                 _this.httpPost('/activity/editActivity', _this.activity, responseBean => {
