@@ -25,7 +25,6 @@ Vue.prototype.protoUploadUrl = 'http://211.69.130.104:8081/';
 Vue.config.productionTip = false;
 
 const router = new VueRouter({
-    mode: 'history',
     routes: [
         {
             path: '/login',
