@@ -19,6 +19,9 @@
                 <el-menu-item index="5-2" @click="router.replace('/bookComment')">书籍音频评论审核</el-menu-item>
                 <el-menu-item index="5-1" @click="router.replace('/shortComment')">短音频评论审核</el-menu-item>
             </el-submenu>
+            <el-menu-item index="6" @click="router.replace('/stat')">
+                数据统计
+            </el-menu-item>
         </el-menu>
         <router-view></router-view>
     </div>

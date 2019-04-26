@@ -12,6 +12,7 @@ import ActivityManage from "@/components/nav/ActivityManage";
 import ShortAudioManage from "@/components/nav/ShortAudioManage";
 import ShortCommentManage from "@/components/nav/ShortCommentManage";
 import BookCommentManage from "@/components/nav/BookCommentManage";
+import StatManage from "@/components/nav/StatManage";
 
 
 Vue.use(VueRouter);
@@ -57,6 +58,10 @@ const router = new VueRouter({
                 {
                     path: '/bookComment',
                     component: BookCommentManage
+                },
+                {
+                    path: '/stat',
+                    component: StatManage
                 }
             ]
         },

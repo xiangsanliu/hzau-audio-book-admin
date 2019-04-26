@@ -13,7 +13,7 @@
                         <template slot-scope="scope">
                             <el-button size="mini" @click="editBook(scope.row)" plain type="primary">编辑</el-button>
                             <el-button size="mini" @click="manageAudio(scope.row)" plain type="primary">管理音频</el-button>
-                            <el-button size=µ"mini" @click="removeBook(scope.row)" plain type="danger">删除</el-button>
+                            <el-button size="mini" @click="removeBook(scope.row)" plain type="danger">删除</el-button>
                         </template>
                     </el-table-column>
                 </el-table>
