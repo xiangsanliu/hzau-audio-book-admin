@@ -23,15 +23,27 @@
                 </el-table-column>
                 <el-table-column width="280" label="操作" fixed="right">
                     <template slot-scope="scope">
-                        <el-button @click="playShortAudio(scope.row)" plain type="primary">试听</el-button>
+                        <el-button @click="playShortAudio(scope.row)"
+                                   type="primary"
+                                   size="mini"
+                                   plain>试听</el-button>
                         <el-button v-if="scope.row.checked === false || scope.row.approved === false"
-                                   @click="approve(scope.row)" plain type="primary">通过
+                                   @click="approve(scope.row)"
+                                   type="primary"
+                                   size="mini"
+                                   plain>通过
                         </el-button>
                         <el-button v-if="scope.row.checked === true && scope.row.approved === false"
-                                   @click="showReason(scope.row)" plain type="primary">查看原因
+                                   @click="showReason(scope.row)"
+                                   type="primary"
+                                   size="mini"
+                                   plain>查看原因
                         </el-button>
                         <el-button v-if="scope.row.checked === false || scope.row.approved === true"
-                                   @click="disApprove(scope.row)" plain type="danger">不通过
+                                   @click="disApprove(scope.row)"
+                                   type="primary"
+                                   size="mini"
+                                   plain>不通过
                         </el-button>
                     </template>
                 </el-table-column>

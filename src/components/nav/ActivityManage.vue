@@ -8,8 +8,8 @@
                 <el-table-column label="活动简介" prop="desc"></el-table-column>
                 <el-table-column label="操作" width="200" fixed="right">
                     <template slot-scope="scope">
-                        <el-button @click="editActivity(scope.row)" plain type="primary">编辑</el-button>
-                        <el-button @click="removeActivity(scope.row)" plain type="danger">删除</el-button>
+                        <el-button size="mini" @click="editActivity(scope.row)" plain type="primary">编辑</el-button>
+                        <el-button size="mini" @click="removeActivity(scope.row)" plain type="danger">删除</el-button>
                     </template>
                 </el-table-column>
             </el-table>

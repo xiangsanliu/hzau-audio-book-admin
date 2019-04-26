@@ -11,9 +11,9 @@
                     <el-table-column label="来源" prop="source"></el-table-column>
                     <el-table-column label="操作">
                         <template slot-scope="scope">
-                            <el-button @click="editBook(scope.row)" plain type="primary">编辑</el-button>
-                            <el-button @click="manageAudio(scope.row)" plain type="primary">管理音频</el-button>
-                            <el-button @click="removeBook(scope.row)" plain type="danger">删除</el-button>
+                            <el-button size="mini" @click="editBook(scope.row)" plain type="primary">编辑</el-button>
+                            <el-button size="mini" @click="manageAudio(scope.row)" plain type="primary">管理音频</el-button>
+                            <el-button size=µ"mini" @click="removeBook(scope.row)" plain type="danger">删除</el-button>
                         </template>
                     </el-table-column>
                 </el-table>

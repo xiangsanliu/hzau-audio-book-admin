@@ -24,10 +24,16 @@
                     <el-table-column width="200" label="操作" fixed="right">
                         <template slot-scope="scope">
                             <el-button v-if="scope.row.checked === false || scope.row.approved === false"
-                                       @click="approve(scope.row)" plain type="primary">通过
+                                       @click="approve(scope.row)"
+                                       plain
+                                       size="mini"
+                                       type="primary">通过
                             </el-button>
                             <el-button v-if="scope.row.checked === false || scope.row.approved === true"
-                                       @click="disApprove(scope.row)" plain type="danger">不通过
+                                       @click="disApprove(scope.row)"
+                                       plain
+                                       size="mini"
+                                       type="danger">不通过
                             </el-button>
                         </template>
                     </el-table-column>

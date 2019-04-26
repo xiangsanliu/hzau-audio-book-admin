@@ -4,7 +4,6 @@ import axios from 'axios';
 axios.defaults.withCredentials = true;
 axios.defaults.baseURL = 'http://211.69.130.104:8081/';
 
-
 /**
  * HTTP GET
  * @param url url
