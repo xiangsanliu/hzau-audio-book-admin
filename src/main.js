@@ -4,15 +4,15 @@ import ElementUI from 'element-ui';
 import VueRouter from 'vue-router';
 import 'element-ui/lib/theme-chalk/index.css';
 import {httpGet, httpPost, removeRecord} from "./utils/http";
-import Login from '@/components/Login'
-import Navigation from '@/components/Navigation'
-import BookManage from "@/components/nav/BookManage";
-import BookListManage from "@/components/nav/BookListManage";
-import ActivityManage from "@/components/nav/ActivityManage";
-import ShortAudioManage from "@/components/nav/ShortAudioManage";
-import ShortCommentManage from "@/components/nav/ShortCommentManage";
-import BookCommentManage from "@/components/nav/BookCommentManage";
-import StatManage from "@/components/nav/StatManage";
+import Login from './components/Login'
+import Navigation from './components/Navigation'
+import BookManage from "./components/nav/BookManage";
+import BookListManage from "./components/nav/BookListManage";
+import ActivityManage from "./components/nav/ActivityManage";
+import ShortAudioManage from "./components/nav/ShortAudioManage";
+import ShortCommentManage from "./components/nav/ShortCommentManage";
+import BookCommentManage from "./components/nav/BookCommentManage";
+import StatManage from "./components/nav/StatManage";
 
 
 Vue.use(VueRouter);
